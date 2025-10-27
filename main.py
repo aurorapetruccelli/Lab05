@@ -62,8 +62,10 @@ def main(page: ft.Page):
         txt_responsabile.value = f"Responsabile: {autonoleggio.responsabile}"
         page.update()
 
+    #Handlers per la gestione dei bottoni utili all'inserimento di una nuova auto
     def handlerMinus(e):
         cVal = num_posti.value
+        #se il valore del numero di posti è minore di 0 non posso diminuire ancora il numero
         if cVal > 0 :
             cVal = cVal-1
             num_posti.value = cVal
@@ -75,18 +77,9 @@ def main(page: ft.Page):
         num_posti.value = cVal
         num_posti.update()
 
-    # definisco i due tasti per aumentare e diminuire il numero di posti
-    button_minus = ft.IconButton(icon=ft.Icons.REMOVE, icon_size=24, icon_color="red", on_click=handlerMinus)
-    button_plus = ft.IconButton(icon=ft.Icons.ADD, icon_size=24, icon_color="green", on_click=handlerPlus)
-
-    # --- EVENTI ---
-    toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=cambia_tema)
-    pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=conferma_responsabile)
-
-    # Bottoni per la gestione dell'inserimento di una nuova auto
     def handler_aggiungi_automobile(e):
         try:
-            # aggiorno la lista delle auto
+            # aggiorno la lista delle auto inserendo la nuova automobile
             autonoleggio.aggiungi_automobile(input_marca.value,input_modello.value, input_anno.value,num_posti.value)
             aggiorna_lista_auto()
 
@@ -96,11 +89,22 @@ def main(page: ft.Page):
             input_anno.value=""
             num_posti.value = 0
 
+            # aggiorno la pagina
             page.update()
 
-        # controllo che i valori inseriti in anno e numero di posti siano validi
+        # controllo che i valori inseriti in anno e numero di posti siano validi (diversi da numeri )
         except Exception as e:
             alert.show_alert("❌ ERRORE: Inserisci valori numerici validi per anno e posti")
+
+
+    # --- EVENTI ---
+    toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=cambia_tema)
+    pulsante_conferma_responsabile = ft.ElevatedButton("Conferma", on_click=conferma_responsabile)
+
+    # Bottoni per la gestione dell'inserimento di una nuova auto
+    # definisco i due tasti per aumentare e diminuire il numero di posti
+    button_minus = ft.IconButton(icon=ft.Icons.REMOVE, icon_size=24, icon_color="red", on_click=handlerMinus)
+    button_plus = ft.IconButton(icon=ft.Icons.ADD, icon_size=24, icon_color="green", on_click=handlerPlus)
 
     # definisco il pulsante per aggiungere l'automobile
     pulsante_aggiungi_automobile = ft.ElevatedButton("Aggiungi automobile", on_click=handler_aggiungi_automobile)
