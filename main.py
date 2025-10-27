@@ -92,7 +92,7 @@ def main(page: ft.Page):
             # aggiorno la pagina
             page.update()
 
-        # controllo che i valori inseriti in anno e numero di posti siano validi (diversi da numeri )
+        # controllo che i valori inseriti in anno e numero di posti siano validi
         except Exception as e:
             alert.show_alert("❌ ERRORE: Inserisci valori numerici validi per anno e posti")
 
